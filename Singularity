@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: kaixhin/cuda-torch
+From: ubuntu:14.04
 
 %help
     cuda_torch_basset
