@@ -9,7 +9,7 @@ From: ubuntu:14.04
     Version v0.1
 
 %post
-    apt-get -qqy update && apt-get install -y --no-install-recommends -q git curl python-pip cython libxft-dev libblas-dev liblapack-dev libatlas-base-dev gfortran libhdf5-dev wget bedtools
+    apt-get -qqy update && apt-get install -y -q dialog apt-utils git curl python-pip cython libxft-dev libblas-dev liblapack-dev libatlas-base-dev gfortran libhdf5-dev wget bedtools
     mkdir -p /home/workspace
     mkdir -p /home/workspace/cuda
     curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash
