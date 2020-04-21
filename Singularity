@@ -9,27 +9,30 @@ From: kaixhin/cuda-torch
     Version v0.1
 
 %post
-    apt-get update && apt-get install -y --no-install-recommends procps lbzip2 libhdf4-alt-dev libhdf5-dev libxml-parser-perl
+    apt-get -qqy update && apt-get install -y --no-install-recommends -q git curl python-pip cython libxft-dev libblas-dev liblapack-dev libatlas-base-dev gfortran libhdf5-dev wget bedtools
+    mkdir -p /home/workspace
+    mkdir -p /home/workspace/cuda
+    curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash
+    git clone https://github.com/torch/distro.git /home/workspace/torch --recursive
+    cd /home/workspace/torch
+    ./install.sh
+    bash -c "source ~/.bashrc"
     
-    wget https://luarocks.org/releases/luarocks-3.3.0.tar.gz
-    tar -zxpf luarocks-3.3.0.tar.gz
-    cd luarocks-3.3.0
-    ./configure && make && sudo make install
-        
-    cd ~
-    git clone https://github.com/davek44/Basset --recursive && cd Basset && ./install_dependencies.py
+    pip install numpy matplotlib seaborn pandas h5py sklearn pysam
     
-    luarocks install luafilesystem
-    luarocks install dpnn
-    luarocks install inn
-    luarocks install dp
+    git clone https://github.com/davek44/Basset.git /home/workspace/Basset
+    cd /home/workspace/Basset
     
-    git clone https://github.com/davek44/torch-hdf5.git && cd torch-hdf5
+    export BASSETDIR=/home/workspace/Basset
+    export PATH=$BASSETDIR/src:$PATH
+    export PYTHONPATH=$BASSETDIR/src:$PYTHONPATH
+    ./install_dependencies.py
     
-    luarocks make
+    echo 'export LUA_PATH="$BASSETDIR/src/?.lua;${LUA_PATH}"' >> ~/.bashrc
+    bash -c "source ~/.bashrc"
     
 %environment
-    export BASSETDIR=~/Basset
+    export BASSETDIR=/home/workspace/Basset
     export PATH=$BASSETDIR/src:$PATH
     export PYTHONPATH=$BASSETDIR/src:$PYTHONPATH
     export LUA_PATH="$BASSETDIR/src/?.lua;$LUA_PATH"
