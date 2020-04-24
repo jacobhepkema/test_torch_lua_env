@@ -33,9 +33,6 @@ From: nvidia/cuda:9.1-cudnn7-devel-ubuntu16.04
     # create some generic mount points
     mkdir /mnt/data /mnt/input /mnt/output /mnt/ref /mnt/code /mnt/work
     
-    # cleanup
-    apt-get clean
-    
     pip install numpy matplotlib seaborn pandas h5py sklearn pysam
     
     git clone https://github.com/davek44/Basset.git /mnt/Basset
@@ -49,6 +46,9 @@ From: nvidia/cuda:9.1-cudnn7-devel-ubuntu16.04
     
     echo 'export LUA_PATH="$BASSETDIR/src/?.lua;${LUA_PATH}"' >> ~/.bashrc
     bash -c "source ~/.bashrc"
+    
+    # cleanup
+    apt-get clean
     
 %environment
     export LC_ALL=C
